@@ -1,0 +1,44 @@
+# ── Virtual environment ────────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Python bytecode ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# ── Runtime I/O ────────────────────────────────────────────────────────────────
+# Input PDFs placed here before processing
+source/
+
+# Generated Excel invoices
+results/
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+app.log
+
+# ── PyInstaller build artifacts ────────────────────────────────────────────────
+build/
+dist/
+*.spec
+
+# ── OS / IDE noise ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Misc Python tooling ────────────────────────────────────────────────────────
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
