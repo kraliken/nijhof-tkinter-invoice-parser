@@ -1,13 +1,13 @@
 """
-ui/state.py — Alkalmazás állapotgép (state machine)
+ui/state.py — Az alkalmazás lehetséges állapotai
 
 Az alkalmazás egy lineáris folyamatot követ:
   IDLE → TYPE_SELECTED → FILE_SELECTED → PROCESSING → SUCCESS
                                                      ↘ ERROR
 
-Az AppState enum értékét az App osztály tárolja (`self.state`),
-és minden állapotváltáskor (`set_state()`) frissíti a GUI elemeket:
-  - gomb engedélyezettség
+Az aktuális állapotot az App osztály tárolja, és minden váltáskor
+frissíti a felületet:
+  - gombok engedélyezettség
   - súgó lépések kiemelése
   - eredményblokk láthatósága
 
@@ -21,6 +21,6 @@ class AppState(Enum):
     IDLE = auto()           # Kezdőállapot: semmi sincs kiválasztva
     TYPE_SELECTED = auto()  # Számlatípus kiválasztva, de PDF még nem
     FILE_SELECTED = auto()  # PDF is kiválasztva, feldolgozás indítható
-    PROCESSING = auto()     # Feldolgozás folyamatban (háttérszál fut)
+    PROCESSING = auto()     # Feldolgozás folyamatban (a háttérben fut)
     SUCCESS = auto()        # Sikeres feldolgozás, Excel elkészült
     ERROR = auto()          # Hiba történt a feldolgozás során

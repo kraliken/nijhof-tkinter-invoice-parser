@@ -1,27 +1,25 @@
 """
-utils/logger.py — Naplózás (logging) konfigurációja
+utils/logger.py — Naplózás
 
-Egyetlen, fájlba író logger-t biztosít az egész alkalmazáshoz.
-A log fájl helye: invoice-parser/app.log (a projekt gyökerében).
+Az egész alkalmazáshoz egyetlen közös naplózót biztosít, amely az app.log fájlba ír.
 
 Használat bármelyik modulban:
     from utils.logger import get_logger
     log = get_logger()
     log.info("Valami történt")
-    log.error("Hiba", exc_info=True)  # exc_info=True csatolja a stack trace-t
+    log.error("Hiba", exc_info=True)  # exc_info=True: a hiba részleteit is naplózza
 
-Megjegyzés: a `logging.basicConfig(...)` csak egyszer fut le (modul betöltéskor),
-így az összes `get_logger()` hívás ugyanazt a konfigurált handlert használja.
+Megjegyzés: a naplózó beállítása egyszer fut le az alkalmazás indulásakor,
+ezután minden `get_logger()` hívás ugyanezt a beállítást használja.
 """
 
 import logging
 from pathlib import Path
 
-# A log fájl a projekt gyökerében (utils/ szülője = invoice-parser/)
+# A log fájl helye: utils/ szülője = src/
 _LOG_PATH = Path(__file__).parent.parent / "app.log"
 
-# Egyszeri globális konfiguráció: fájlba ír, UTF-8 kódolással,
-# timestamp + szint + üzenet formátumban.
+# Naplózó beállítása: fájlba ír, időbélyeg + szint + üzenet formátumban.
 logging.basicConfig(
     filename=str(_LOG_PATH),
     level=logging.INFO,
@@ -31,5 +29,5 @@ logging.basicConfig(
 
 
 def get_logger(name: str = "invoice_parser") -> logging.Logger:
-    """Visszaad egy named logger-t. Alapértelmezett név: 'invoice_parser'."""
+    """Visszaadja az alkalmazás naplózóját."""
     return logging.getLogger(name)

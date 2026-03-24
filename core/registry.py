@@ -1,5 +1,5 @@
 """
-core/registry.py — Parser konfiguráció (registry pattern)
+core/registry.py — Támogatott számlatípusok nyilvántartása
 
 Ez a modul az egyetlen hely, ahol az összes támogatott számlatípus regisztrálva van.
 Ha új számlatípust kell hozzáadni (pl. "bmw"), elég ide felvenni egy új bejegyzést —
@@ -8,11 +8,11 @@ a GUI és a feldolgozó logika automatikusan felismeri.
 PARSERS struktúra (minden kulcs egy számlatípus):
     label       — megjelenített név a GUI kártyán
     subtitle    — alcím a kártyán (pl. a cég teljes neve)
-    card_col    — oszlopindex a GUI kártya-rácsban (0 = bal, 1 = jobb)
-    card_value  — az IntVar értéke, amikor ez a kártya ki van választva
+    card_col    — a kártya helye a rácson (0 = bal, 1 = jobb)
+    card_value  — belső azonosítószám a kártyához
                   (1-től indul, mert 0 = "nincs kiválasztva")
-    process_fn  — PDF → List[Dict] függvény (pdfplumber alapú parser)
-    export_fn   — List[Dict] → Excel fájl függvény (pandas alapú export)
+    process_fn  — az a függvény, amely a PDF-ből kinyeri az adatokat
+    export_fn   — az a függvény, amely az adatokat Excel fájlba írja
     macro       — a macros/ mappában lévő Excel betöltő fájl nevének előtagja
 """
 
@@ -41,7 +41,7 @@ PARSERS = {
     },
 }
 
-# Fordított leképezés: IntVar értéke → parser kulcs.
+# Fordított keresés: belső azonosítószám → számlatípus neve.
 # Szükséges, mert a GUI Radiobutton integer értékekkel dolgozik (card_value),
-# de a feldolgozó kódnak string kulcsra van szüksége (pl. "multialarm").
+# de a feldolgozó kódnak a típus nevére van szüksége (pl. "multialarm").
 VALUE_TO_TYPE = {cfg["card_value"]: key for key, cfg in PARSERS.items()}
