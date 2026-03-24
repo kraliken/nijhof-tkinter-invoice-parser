@@ -36,6 +36,7 @@ from core.registry import PARSERS, VALUE_TO_TYPE
 from services.file_service import validate_pdf
 from services import processing_service
 from utils.logger import get_logger
+from utils.paths import get_app_root
 
 
 WINDOW_TITLE = "BPiON — Invoice Parser v2.0"
@@ -309,7 +310,7 @@ class App:
         A fájlt a macros/ mappában keresi glob-bal, így a kiterjesztéstől
         (pl. .xlsm) függetlenül megtalálja.
         """
-        macro_dir = Path(__file__).parent.parent / "macros"
+        macro_dir = get_app_root() / "macros"
         base_name = PARSERS[self.selected_type]["macro"] if self.selected_type else ""
         # Glob-bal keresünk, hogy ne kelljen a pontos kiterjesztést tudni
         matches = list(macro_dir.glob(f"{base_name}*")) if macro_dir.exists() else []
